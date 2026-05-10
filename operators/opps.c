@@ -4,13 +4,6 @@
 #include  "tensor_runtime.h"
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-}
-#endif
-
-
 struct base_tensor add(struct base_tensor *a, struct base_tensor *b) {
     if (a->dtype != b->dtype) {
         printf("Error: add: dtype missing");
@@ -18,16 +11,16 @@ struct base_tensor add(struct base_tensor *a, struct base_tensor *b) {
     }
 }
 
-static void sub() {}
+struct base_tensor sub(struct base_tensor *a, struct base_tensor *b) {}
 
-static void div() {}
+struct base_tensor div(struct base_tensor *a) {};
 
-static void mul() {}
+struct base_tensor mul(struct base_tensor *a, struct base_tensor *b) {};
 
-static void transpose() {}
+struct base_tensor transpose(struct base_tensor *a) {};
 
-static void sigmoid() {}
+struct base_tensor sigmoid(struct base_tensor *a) {};
 
-static void gelu() {}
+struct base_tensor gelu(struct base_tensor *a) {};
 
 static void concat() {}
