@@ -90,10 +90,25 @@ struct base_tensor *create_tensor(
     t->dtype = type;
     t->num_of_elem = count;
     t->num_of_bytes = nbytes;
+    t->num_dims = num_dims;
+
+    int64_t *shst = malloc((size_t)num_dims * 2u * sizeof(int64_t));
+    if (!shst) {
+        free(t);
+        return NULL;
+    }
+    t->shape = shst;
+    t->stride = shst + num_dims;
+    for (int i = 0; i < num_dims; i++)
+        t->shape[i] = dims[i];
+    t->stride[num_dims - 1] = 1;
+    for (int i = num_dims - 2; i >= 0; i--)
+        t->stride[i] = t->stride[i + 1] * t->shape[i + 1];
 
     if (nbytes > 0) {
         t->data = create_buffer(ctx, nbytes);
         if (!t->data) {
+            free(t->shape);
             free(t);
             return NULL;
         }
@@ -190,7 +205,13 @@ void tensor_destroy(struct base_tensor *t)
 {
     if (!t)
         return;
-    if (!t->view_src)
+    if (!t->view_src) {
         free(t->data);
+        if (t->shape) {
+            free(t->shape);
+            t->shape = NULL;
+            t->stride = NULL;
+        }
+    }
     free(t);
 }

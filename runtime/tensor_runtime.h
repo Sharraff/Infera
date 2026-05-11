@@ -35,6 +35,10 @@ struct base_tensor {
     int64_t num_of_elem;
     size_t num_of_bytes;
 
+    int num_dims; /* rank; shape[i] and stride[i] valid for i in [0, num_dims) */
+    int64_t *shape; /* axis lengths (same order as create_tensor dims) */
+    int64_t *stride; /* element strides, row-major contiguous; freed with shape */
+
     struct base_tensor *src;
 
     struct base_tensor *view_src;
