@@ -1,7 +1,11 @@
+#ifndef OPPS_H
+#define OPPS_H
+
 #include "stdio.h"
 #include "stdlib.h"
 
-
+struct context;
+struct base_tensor;
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,6 +22,32 @@ enum base_opps {
     OPP_CONCAT = 9
 };
 
+struct base_tensor *tensor_add(
+    struct context *ctx,
+    struct base_tensor *a,
+    struct base_tensor *b
+);
+
+struct base_tensor *tensor_sub(
+    struct context *ctx,
+    struct base_tensor *a,
+    struct base_tensor *b
+);
+
+struct base_tensor *tensor_div(
+    struct context *ctx,
+    struct base_tensor *a,
+    struct base_tensor *b
+);
+
+struct base_tensor *tensor_mul(
+    struct context *ctx,
+    struct base_tensor *a,
+    struct base_tensor *b
+);
+
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* OPPS_H */
